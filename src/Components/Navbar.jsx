@@ -9,9 +9,11 @@ function Navbar() {
 
   const navLinks = [
    
+    { name: "Programming", path: "#" },
+    { name: "Technology", path: "#" },
+    { name: "News", path: "#" },
     { name: "Contact Us", path: "#" },
     { name: "About", path: "/About" },
-    { name: "Coding", path: "#" },
     // { name: "Blog", path: "/blog" },
   ];
 

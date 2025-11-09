@@ -10,6 +10,7 @@ import Login from "./Pages/Login";
 import AddBlog from "./Pages/AddBlog";
 import BlogDetails from "./Pages/BlogDetails";
 import { useTheme } from "./Context/ThemeContext";
+import ProtectedRoute from "./Context/ProtectedRoutes";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -26,10 +27,32 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/Dashboard" element={<DashBoard />} />
-        <Route path="/EditBlog" element={<EditBlog />} />
+        <Route
+        path="/Dashboard"
+        element={
+          <ProtectedRoute>
+            <DashBoard />
+          </ProtectedRoute>
+        }
+      />
+          <Route
+        path="/EditBlog"
+        element={
+          <ProtectedRoute>
+            <EditBlog />
+          </ProtectedRoute>
+        }
+      />
+
         <Route path="/Blog/:id" element={<BlogDetails />} />
-        <Route path="/AddBlog" element={<AddBlog />} />
+          <Route
+        path="/AddBlog"
+        element={
+          <ProtectedRoute>
+            <AddBlog />
+          </ProtectedRoute>
+        }
+      />
         <Route path="/Login" element={<Login />} />
       </Routes>
 
