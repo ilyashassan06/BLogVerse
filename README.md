@@ -1,16 +1,88 @@
-# React + Vite
+📘 BlogVerse – Modern React Blog Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully responsive, theme-aware, Firebase-powered blogging platform built with React and TailwindCSS, featuring a beautiful landing page, rich text editor support, sanitised HTML rendering, and an admin dashboard for managing content.
 
-Currently, two official plugins are available:
+🚀 Features
+🔥 Modern Landing Page
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Featured post display
 
-## React Compiler
+Latest posts grid
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Category filters
 
-## Expanding the ESLint configuration
+Smooth dark/light theme
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Professional UI with TailwindCSS
+
+📝 Rich Blog Editor
+
+Create, edit, and publish posts
+
+Supports images, headings, lists, code blocks and more
+
+Automatically sanitizes HTML for safety
+
+🌙 Dark / Light Theme
+
+Powered by useTheme()
+
+Different colors for headings, paragraphs, lists, and UI elements
+
+Yellow accents in dark mode, blue accents in light mode
+
+No logic changed — pure theme-based UI layer
+
+📄 Beautiful Blog Details Page
+
+Large hero-style header
+
+Author card with metadata
+
+Clean, readable typography
+
+Styled lists, images, code blocks
+
+Optional DOMPurify sanitization to remove harmful inline styles
+
+Sticky sidebar widgets
+
+“You might also like” section
+
+🛠 Admin Dashboard
+
+Secure login using Firebase Authentication
+
+Add, edit, delete blogs
+
+Username saved in Firestore
+
+Dark/light themed UI
+
+Mobile-friendly table & card views
+
+🔐 Secure Rendering
+
+Uses optional DOMPurify to sanitize blog HTML
+
+Prevents inline font-size, list-style overrides
+
+Blocks XSS and unwanted attributes
+
+☁ Firebase Integration
+
+Firebase Firestore for storing blogs
+
+Firebase Storage for blog images
+
+Firebase Auth for admin login
+
+Real-time timestamp formatting
+
+🧱 Tech Stack
+Frontend   :	React, React Router
+Styling    :	TailwindCSS (custom dark/light theme)
+Rich Text  :	React Quill / Custom HTML content
+Backend    :	Firebase Firestore + Firebase Storage
+Auth       :	Firebase Authentication
+Security   :	DOMPurify 

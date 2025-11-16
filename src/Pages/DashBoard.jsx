@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useUser } from "../Context/UserNameContext";
 
 function DashBoard() {
   const { theme } = useTheme();
-  const [username, setUsername] = useState("");
-  const [savedName, setSavedName] = useState("");
-  const [loading, setLoading] = useState(true);
+ 
+  
   const navigate = useNavigate();
+
+  const { username, setUsername, savedName, handleSaveName, saving, user } = useUser();
 
   // Dummy Blog Data
   const blogs = [
@@ -29,49 +31,9 @@ function DashBoard() {
   ];
 
   // ✅ Save username in Firestore
-  const handleSaveName = async (e) => {
-    e.preventDefault();
+ 
 
-    if (username.trim()) {
-      try {
-        const user = auth.currentUser;
-        if (!user) {
-          alert("Please log in first.");
-          return;
-        }
 
-        const userRef = doc(db, "users", user.uid);
-        await setDoc(userRef, { username }, { merge: true });
-
-        setSavedName(username);
-        setUsername("");
-        console.log("✅ Username saved successfully!");
-      } catch (error) {
-        console.error("❌ Error saving username:", error);
-      }
-    }
-  };
-
-  // ✅ Fetch username from Firestore on load
-  useEffect(() => {
-    const fetchUsername = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          const userRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(userRef);
-          if (docSnap.exists()) {
-            setSavedName(docSnap.data().username || "");
-          }
-        } catch (error) {
-          console.error("Error fetching username:", error);
-        }
-      }
-      setLoading(false);
-    };
-
-    fetchUsername();
-  }, []);
 
   // ✅ Handle add blog
   const handleAddBlog = () => {
@@ -89,7 +51,7 @@ function DashBoard() {
   };
 
   // ✅ Show loading until data fetched
-  if (loading) {
+  if (saving) {
     return (
       <div
         className={`flex items-center justify-center h-screen ${
@@ -175,13 +137,13 @@ function DashBoard() {
               />
               <button
                 type="submit"
-                className={`px-4 py-2 rounded-md font-medium w-full sm:w-auto transition-all ${
+                className={`px-4 sm:px-2 py-2 rounded-md font-medium w-full sm:w-[200px] transition-all ${
                   theme === "dark"
                     ? "bg-yellow-400 text-gray-900 hover:bg-yellow-300"
                     : "bg-blue-600 text-white hover:bg-blue-700"
                 }`}
               >
-                Save
+                {savedName?"Change Name":"Add Name"}
               </button>
             </form>
           </div>

@@ -5,13 +5,12 @@ import { getFirestore } from "firebase/firestore";
 
 // 🔁 paste your own config here from Firebase settings
 const firebaseConfig = {
-  apiKey: "AIzaSyAGaPPsyxfDMAauGNRZCPAPPO1T91pWWsM",
-  authDomain: "blogverse-1f0f3.firebaseapp.com",
-  projectId: "blogverse-1f0f3",
-  storageBucket: "blogverse-1f0f3.firebasestorage.app",
-  messagingSenderId: "643631715449",
-  appId: "1:643631715449:web:e66d97fff93e9f3dd9f0a8",
-  measurementId: "G-VV885NKX9E"
+  apiKey: "AIzaSyCIkPHKZW4pJg54f4_Z0_zg0f633pzrat0",
+  authDomain: "blogverse-dev.firebaseapp.com",
+  projectId: "blogverse-dev",
+  storageBucket: "blogverse-dev.firebasestorage.app",
+  messagingSenderId: "600724426039",
+  appId: "1:600724426039:web:d0e63420a7350ba85b5eb2"
 };
 
 const app = initializeApp(firebaseConfig);
