@@ -42,7 +42,7 @@ function BlogDetails() {
     };
   }, [id]);
 
-  // 🕒 Format createdAt date (unchanged)
+  // 🕒 Format createdAt date
   const formattedDate = useMemo(() => {
     if (!blog?.createdAt) return "";
     try {
@@ -95,7 +95,7 @@ function BlogDetails() {
     );
   }
 
-  // ⚠️ Error state (same message, styled)
+  // ⚠️ Error state
   if (err) {
     return (
       <div className="max-w-3xl mx-auto p-6">
@@ -114,7 +114,7 @@ function BlogDetails() {
     );
   }
 
-  // 🚫 Blog not found (kept same behavior, updated theme)
+  // 🚫 Blog not found
   if (!blog) {
     return (
       <div className="max-w-3xl mx-auto p-6">
@@ -231,31 +231,38 @@ function BlogDetails() {
           <div className="lg:col-span-2">
             <div className={`rounded-2xl p-6 ${theme === "dark" ? "bg-gray-800 border border-gray-700 text-gray-100" : "bg-white border border-gray-200 text-gray-900"} shadow-sm`}>
               {cleanBody ? (
-               <div
-  className={`blog-content max-w-none text-base md:text-lg leading-relaxed
-    [&_ol]:list-decimal [&_ol]:pl-6 
-    [&_ul]:list-disc [&_ul]:pl-6
-    [&_img]:max-w-full [&_img]:h-auto
-    [&_pre]:rounded [&_code]:rounded
-    ${
-      theme === "dark"
-        ? `
-          text-gray-200
-          [&_p]:text-gray-200
-          [&_li]:text-gray-200
-          [&_span]:text-gray-200
-          [&_h1]:text-yellow-300 [&_h2]:text-yellow-300 [&_h3]:text-yellow-300
-        `
-        : `
-          text-gray-900
-          [&_p]:text-gray-900
-          [&_li]:text-gray-900
-          [&_span]:text-gray-900
-          [&_h1]:text-blue-700 [&_h2]:text-blue-700 [&_h3]:text-blue-700
-        `
-    }`}
-  dangerouslySetInnerHTML={{ __html: cleanBody }}
-/>
+                <div
+                  className={`blog-content max-w-none text-base md:text-lg leading-relaxed
+                    [&_ol]:list-decimal [&_ol]:pl-6
+                    [&_ul]:list-disc [&_ul]:pl-6
+                    [&_img]:max-w-full [&_img]:h-auto
+                    [&_pre]:rounded [&_code]:rounded
+                    /* explicit heading sizes to avoid inheritance from Tailwind preflight */
+                    [&_h1]:text-4xl [&_h1]:font-extrabold [&_h1]:leading-tight [&_h1]:mt-6 [&_h1]:mb-4
+                    [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:mt-6 [&_h2]:mb-3
+                    [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:mt-5 [&_h3]:mb-3
+                    [&_h4]:text-xl [&_h4]:font-semibold [&_h4]:mt-4 [&_h4]:mb-2
+                    [&_h5]:text-lg [&_h5]:font-medium [&_h5]:mt-3 [&_h5]:mb-2
+                    [&_h6]:text-base [&_h6]:font-medium [&_h6]:mt-2 [&_h6]:mb-2
+                    ${
+                      theme === "dark"
+                        ? `
+                          text-gray-200
+                          [&_p]:text-gray-200
+                          [&_li]:text-gray-200
+                          [&_span]:text-gray-200
+                          [&_h1]:text-yellow-300 [&_h2]:text-yellow-300 [&_h3]:text-yellow-300
+                        `
+                        : `
+                          text-gray-900
+                          [&_p]:text-gray-900
+                          [&_li]:text-gray-900
+                          [&_span]:text-gray-900
+                          [&_h1]:text-blue-700 [&_h2]:text-blue-700 [&_h3]:text-blue-700
+                        `
+                    }`}
+                  dangerouslySetInnerHTML={{ __html: cleanBody }}
+                />
               ) : (
                 <p className="text-gray-500">No content available.</p>
               )}
