@@ -152,8 +152,9 @@ export default function Home() {
                 <h3 className={`text-lg font-semibold mb-1 ${theme === "dark" ? "text-yellow-200" : "text-gray-900"}`}>{b.title}</h3>
                 <p className="text-xs opacity-70">{b.authorName || b.authorEmail || 'Unknown'} • {formatDate(b.createdAt)}</p>
                 <p className="mt-3 text-sm opacity-80">{stripHtml(b.content)}</p>
-                <div className="mt-4 flex items-center justify-between">
-                  <Link to={`/blog/${b.id}`} className={`text-sm font-medium ${theme === "dark" ? "text-yellow-300" : "text-blue-600"}`}>Read</Link>
+                <div className=" flex items-center justify-between">
+                  <Link to={`/blog/${b.id}`} className={`text-xl font-medium border-2
+                    px-4 py-2 rounded-md  ${theme === "dark" ? "text-yellow-300" : "text-blue-600"}`}>Read Full</Link>
                   <span className="text-xs opacity-60">{b.category || 'General'}</span>
                 </div>
               </div>

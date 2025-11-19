@@ -3,37 +3,38 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, query, getDocs, collection, orderBy } from "firebase/firestore";
 import { useUser } from "../Context/UserNameContext";
 
 function DashBoard() {
   const { theme } = useTheme();
- 
+ const [blogs, setBlogs] = useState([]);
+ const [loading, setLoading] = useState(true);
   
   const navigate = useNavigate();
 
   const { username, setUsername, savedName, handleSaveName, saving, user } = useUser();
 
   // Dummy Blog Data
-  const blogs = [
-    {
-      id: 1,
-      title: "Mastering React Components",
-      date: "Nov 8, 2025",
-      status: "Published",
-    },
-    {
-      id: 2,
-      title: "Getting Started with Firebase",
-      date: "Nov 6, 2025",
-      status: "Draft",
-    },
-  ];
+   useEffect(() => {
+      (async () => {
+        try {
+          const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
+          const snap = await getDocs(q);
+          const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+          setBlogs(list);
+        } catch (e) {
+          console.error("Error fetching blogs:", e);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }, []);
 
   // ✅ Save username in Firestore
  
 
-
+console.log(blogs)
 
   // ✅ Handle add blog
   const handleAddBlog = () => {
@@ -175,7 +176,7 @@ function DashBoard() {
           </h2>
 
           {/* Desktop Table */}
-          <div className="hidden md:block w-full overflow-x-auto">
+          <div className="hidden md:block w-full  overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr

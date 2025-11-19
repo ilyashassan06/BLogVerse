@@ -13,6 +13,7 @@ import AddBlog from "./Pages/AddBlog";
 import BlogDetails from "./Pages/BlogDetails";
 import { useTheme } from "./Context/ThemeContext";
 import ProtectedRoute from "./Context/ProtectedRoutes";
+import Categories from "./Pages/Categories";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -47,6 +48,7 @@ function App() {
       />
 
         <Route path="/Blog/:id" element={<BlogDetails />} />
+        <Route path="/:id" element={<Categories />} />
           <Route
         path="/AddBlog"
         element={

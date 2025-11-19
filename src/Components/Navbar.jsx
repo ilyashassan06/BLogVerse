@@ -27,6 +27,8 @@ function Navbar() {
     >
       <div className="flex justify-between items-center p-6 lg:px-20 py-4 w-full mx-auto">
         {/* Logo */}
+        <Link
+        to={"/"}>
         <h1
           className={`text-3xl font-bold tracking-wide ${
             theme === "dark" ? "text-yellow-400" : "text-blue-600"
@@ -34,13 +36,14 @@ function Navbar() {
         >
           BlogVerse
         </h1>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 text-xl font-medium">
           {navLinks.map((link, index) => (
             <Link
               key={index}
-              to={link.path}
+              to={`/${link.name}`}
               className={`transition-colors duration-300 ${
                 theme === "dark"
                   ? "text-gray-200 hover:text-yellow-400"
@@ -87,7 +90,7 @@ function Navbar() {
           {navLinks.map((link, index) => (
             <Link
               key={index}
-              to={link.path}
+              to={`/categories/${link.name}`}
               onClick={() => setIsOpen(false)}
               className={`block py-2 border-b transition-colors ${
                 theme === "dark"
