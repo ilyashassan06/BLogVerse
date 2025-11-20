@@ -4,28 +4,28 @@ import { Link } from "react-router-dom";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useTheme } from "../Context/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs } from "../features/blogSlice";
 
 export default function Home() {
   const { theme } = useTheme();
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [blogs, setBlogs] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
-        const snap = await getDocs(q);
-        const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        setBlogs(list);
-      } catch (e) {
-        console.error("Error fetching blogs:", e);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+ 
+  const dispatch = useDispatch();
+
+  const {items:blogs,loading,error} = useSelector((state)=> state.blogs)
+  // Dummy Blog Data
+ useEffect(() => {
+  dispatch(fetchBlogs());
+  
+ 
+  
+ }, [dispatch])
+ 
 
   const featured = useMemo(() => blogs[0] || null, [blogs]);
 
@@ -49,7 +49,7 @@ export default function Home() {
     }
   };
 
-  if (loading) {
+  if (loading == "pending") {
     return (
       <div className={`${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"} min-h-screen flex items-center justify-center p-6`}>
         <div className="animate-pulse text-center">

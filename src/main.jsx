@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from './Context/ThemeContext.jsx'
 import { AuthProvider } from './Context/AuthContext.jsx'
 import { UserProvider } from './Context/UserNameContext.jsx'
+import { store } from './features/store.js'
+import { Provider } from 'react-redux'
 
 createRoot(document.getElementById('root')).render(
   
@@ -13,9 +15,11 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthProvider>
        <UserProvider>
+          <Provider store={store}>
       <ThemeProvider>
         <App />
       </ThemeProvider>
+      </Provider>
       </UserProvider>
     </AuthProvider>
   </BrowserRouter>

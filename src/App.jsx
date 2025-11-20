@@ -39,7 +39,7 @@ function App() {
         }
       />
           <Route
-        path="/EditBlog"
+        path="/EditBlog/:id"
         element={
           <ProtectedRoute>
             <EditBlog />

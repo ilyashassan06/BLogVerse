@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTheme } from "../Context/ThemeContext";
 import { Menu, X } from "lucide-react"; // for icons
+import BlogVerseLogo from "../assets/images/BLogVerse.png";
 
 function Navbar() {
   const { theme } = useTheme();
@@ -12,8 +13,7 @@ function Navbar() {
     { name: "Programming", path: "#" },
     { name: "Technology", path: "#" },
     { name: "News", path: "#" },
-    { name: "Contact Us", path: "#" },
-    { name: "About", path: "/About" },
+   
     // { name: "Blog", path: "/blog" },
   ];
 
@@ -36,6 +36,8 @@ function Navbar() {
         >
           BlogVerse
         </h1>
+
+        
         </Link>
 
         {/* Desktop Navigation */}

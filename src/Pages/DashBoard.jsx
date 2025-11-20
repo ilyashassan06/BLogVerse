@@ -3,38 +3,54 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
-import { doc, setDoc, getDoc, query, getDocs, collection, orderBy } from "firebase/firestore";
+import { doc, setDoc, getDoc, query, getDocs, collection, orderBy, deleteDoc } from "firebase/firestore";
 import { useUser } from "../Context/UserNameContext";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteBlog, fetchBlogs } from "../features/blogSlice";
 
 function DashBoard() {
   const { theme } = useTheme();
- const [blogs, setBlogs] = useState([]);
- const [loading, setLoading] = useState(true);
+
   
   const navigate = useNavigate();
 
   const { username, setUsername, savedName, handleSaveName, saving, user } = useUser();
+const dispatch = useDispatch();
 
+const formatDateFromISO = (iso) => {
+  if (!iso) return "Unknown date";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "Invalid date";
+  return new Intl.DateTimeFormat("en-IN", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(d);
+};
+
+const {items:blogs,loading,error} = useSelector((state)=> state.blogs)
   // Dummy Blog Data
-   useEffect(() => {
-      (async () => {
-        try {
-          const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
-          const snap = await getDocs(q);
-          const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-          setBlogs(list);
-        } catch (e) {
-          console.error("Error fetching blogs:", e);
-        } finally {
-          setLoading(false);
-        }
-      })();
-    }, []);
+ useEffect(() => {
+  dispatch(fetchBlogs());
+  
+ 
+  
+ }, [dispatch])
+ 
 
   // ✅ Save username in Firestore
  
+    const handleDelete = async (id) => {
+      const ok = window.confirm("Are you sure you want to delete this blog?");
+  if (!ok) return;
 
-console.log(blogs)
+  dispatch(deleteBlog(id));
+  };
+  // -
+
+
 
   // ✅ Handle add blog
   const handleAddBlog = () => {
@@ -219,7 +235,7 @@ console.log(blogs)
                         <span className="text-gray-400">No name</span>
                       )}
                     </td>
-                    <td className="py-2 px-3">{blog.date}</td>
+                    <td className="py-2 px-3">{formatDateFromISO(blog.createdAt)}</td>
                     <td
                       className={`py-2 px-3 font-medium ${
                         blog.status === "Published"
@@ -233,9 +249,10 @@ console.log(blogs)
                     >
                       {blog.status}
                     </td>
-                    <td className="py-2 px-3 flex gap-2 justify-center flex-wrap">
+                    <td className="py-2 px-3 flex gap-2  justify-center flex-wrap">
                       <button
-                        className={`px-3 py-1 rounded-md text-sm transition-all ${
+                        onClick={() => navigate(`/EditBlog/${blog.id}`)}
+                        className={`px-3 py-1 w-20 rounded-md text-sm transition-all ${
                           theme === "dark"
                             ? "bg-yellow-400 text-gray-900 hover:bg-yellow-300"
                             : "bg-blue-600 text-white hover:bg-blue-700"
@@ -244,7 +261,8 @@ console.log(blogs)
                         Edit
                       </button>
                       <button
-                        className={`px-3 py-1 rounded-md text-sm transition-all ${
+                      onClick={() => handleDelete(blog.id)}
+                        className={`px-3 py-1 w-20 rounded-md text-sm transition-all ${
                           theme === "dark"
                             ? "bg-red-500 text-white hover:bg-red-400"
                             : "bg-red-600 text-white hover:bg-red-700"
@@ -304,7 +322,8 @@ console.log(blogs)
 
                 <div className="flex gap-3 mt-3">
                   <button
-                    className={`px-3 py-1 rounded-md text-sm w-full transition-all ${
+                    onClick={() => navigate(`/EditBlog/${blog.id}`)}
+                    className={`px-3 py-1 rounded-md text-sm w-full  transition-all ${
                       theme === "dark"
                         ? "bg-yellow-400 text-gray-900 hover:bg-yellow-300"
                         : "bg-blue-600 text-white hover:bg-blue-700"
@@ -313,6 +332,7 @@ console.log(blogs)
                     Edit
                   </button>
                   <button
+                  onClick={() => handleDelete(blog.id)}
                     className={`px-3 py-1 rounded-md text-sm w-full transition-all ${
                       theme === "dark"
                         ? "bg-red-500 text-white hover:bg-red-400"
